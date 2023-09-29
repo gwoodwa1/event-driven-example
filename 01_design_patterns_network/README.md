@@ -49,6 +49,30 @@ func (n NetworkHandler) PerformNetworkOperation(ipAddress string) error {
 // Mock implementations and main function
 // ...
 ```
+`NetworkHandler` is the central component that depends on the DeviceRepository, ConfigurationClient, and MonitoringClient.
+Arrows represent the direction of the dependency.
+
+```
++---------------------+        +----------------------+
+|                     |        |                      |
+|    NetworkHandler   +-------->  DeviceRepository   |
+|                     |        |                      |
++----------+----------+        +----------------------+
+           |
+           |                         +----------------------+
+           |                         |                      |
+           +-------------------------+  ConfigurationClient |
+           |                         |                      |
+           |                         +----------------------+
+           |
+           |                         +----------------------+
+           |                         |                      |
+           +------------------------->  MonitoringClient    |
+                                     |                      |
+                                     +----------------------+
+```
+
+
 
 ## Design Patterns
 
