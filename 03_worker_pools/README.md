@@ -4,6 +4,9 @@ Telemetry is a critical aspect of network operations, especially in modern netwo
 
 ## Why Use a Worker Pool?
 
+![image](https://github.com/gwoodwa1/event-driven-example/assets/63735312/579b5254-cf0e-4ce5-80f2-f26442ec96b4)
+
+
 A worker pool is a design pattern where a collection of threads or processes are created to efficiently execute tasks from a queue. For telemetry, given the high volume of messages, using a worker pool can be highly beneficial:
 
 1. **Scalability**: A worker pool allows us to process multiple messages concurrently. As the volume of messages increases, the worker pool can efficiently distribute the tasks among available workers.
