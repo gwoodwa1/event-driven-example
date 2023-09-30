@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"time"
 )
 
 // Device struct represents a network device in the system.
@@ -52,12 +53,18 @@ func (n NetworkHandler) PerformNetworkOperation(ipAddress string) error {
 		return fmt.Errorf("failed to get device: %v", err)
 	}
 
-	if err := n.configurationClient.ConfigureDevice(device); err != nil {
-		return fmt.Errorf("failed to configure device: %v", err)
+	err = retry(func() error {
+		return n.configurationClient.ConfigureDevice(device)
+	})
+	if err != nil {
+		return fmt.Errorf("failed to configure device after retries: %v", err)
 	}
 
-	if err := n.monitoringClient.MonitorDevice(device); err != nil {
-		return fmt.Errorf("failed to monitor device: %v", err)
+	err = retry(func() error {
+		return n.monitoringClient.MonitorDevice(device)
+	})
+	if err != nil {
+		return fmt.Errorf("failed to monitor device after retries: %v", err)
 	}
 
 	return nil
@@ -86,6 +93,21 @@ func (m MockMonitoringClient) MonitorDevice(d Device) error {
 	log.Printf("Monitoring device with IP: %s", d.IPAddress)
 	return nil
 }
+
+
+// retry function to handle operation retries
+func retry(f func() error) error {
+	maxRetries := 3
+	for i := 0; i < maxRetries; i++ {
+		if err := f(); err != nil {
+			time.Sleep(time.Second * 2) // Sleep for 2 seconds before retrying
+			continue
+		}
+		return nil
+	}
+	return fmt.Errorf("reached maximum retries")
+}
+
 
 func main() {
 	networkHandler := NewNetworkHandler(MockDeviceRepository{}, MockConfigurationClient{}, MockMonitoringClient{})
