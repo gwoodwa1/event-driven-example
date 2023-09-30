@@ -27,6 +27,9 @@ Given the high volume of telemetry data in network operations and the need for e
 
 ## How Does a Worker Pool Handle Messages or Data?
 
+![image](https://github.com/gwoodwa1/event-driven-example/assets/63735312/e93edbd7-f60c-4963-8f6e-4938323661ba)
+
+
 A worker pool is designed to manage and distribute tasks (in this context, messages or data) efficiently across a set of workers. Here's a step-by-step breakdown of how a worker pool typically handles incoming messages:
 
 ### 1. Initialization:
