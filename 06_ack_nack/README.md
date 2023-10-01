@@ -8,12 +8,17 @@ When dealing with message-driven systems, ensuring that a message has been succe
    - An acknowledgment (`Ack`) is a signal sent by a subscriber to indicate that a message has been successfully received and processed.
    - Once a message is acknowledged, the message broker (e.g., Redis, RabbitMQ) knows that it doesn't need to redeliver that message to the subscriber.
 
+     ![ack](https://github.com/gwoodwa1/event-driven-example/assets/63735312/261d3d1e-bccd-4fd6-9233-ee6b6054102e)
+
 2. **Negative Acknowledgment (`Nack`)**:
    - A negative acknowledgment (`Nack`) is the opposite of an `Ack`. It indicates that there was a problem processing the message.
    - Reasons for sending a `Nack` might include:
      - Message payload is malformed or cannot be parsed.
      - An error occurred while processing the message, such as a database error.
      - The processing logic determined that the message should not be processed (e.g., an invalid command in a command-driven system).
+    
+      ![nack](https://github.com/gwoodwa1/event-driven-example/assets/63735312/8f798938-8684-462e-994e-701fbb69b3fd)
+
 
 3. **Handling `Nack`**:
    - When a message broker receives a `Nack`, it knows that the message was not processed successfully.
@@ -21,6 +26,9 @@ When dealing with message-driven systems, ensuring that a message has been succe
      - **Immediate Redelivery**: The broker might immediately try to redeliver the message.
      - **Delayed Redelivery**: The broker might wait for a specified period before attempting to redeliver.
      - **Dead Letter Queue**: After a certain number of redelivery attempts, the message might be moved to a special queue called a "dead letter queue" for further inspection.
+
+   
+
 
 ## Practical Considerations:
 
